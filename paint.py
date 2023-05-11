@@ -1,12 +1,11 @@
 """Paint, for drawing shapes.
+ Ejercicios
 
-Exercises
-
-1. Add a color.
-2. Complete circle.
-3. Complete rectangle.
-4. Complete triangle.
-5. Add width parameter.
+1. Un color nuevo
+2. Dibujar un círculo
+El otro compañero añadirá:
+3. Completar el rectángulo
+4. Completar el triángulo
 """
 
 from turtle import *
@@ -20,6 +19,27 @@ def line(start, end):
     goto(start.x, start.y)
     down()
     goto(end.x, end.y)
+
+
+def circle(start, end):
+
+    #Recibe una longitud en start, la cual interpretamos como el diámetro
+    up()
+
+    #Se procede a ir a la ubicación del centro del circulo, la cual es d/2
+    goto(start.x/2, start.y)
+    down()
+
+    #Se inicia el relleno del circúlo
+    begin_fill()
+
+    #Se determina el diámetro como el final de x menos el inicio de x 
+    diametro=end.x -start.x
+
+    #Se dibuja un punto en el centro requerido, con diametro definido y color a cargo del fill
+    dot(diametro)
+
+    end_fill()
 
 
 def square(start, end):
@@ -36,9 +56,7 @@ def square(start, end):
     end_fill()
 
 
-def circle(start, end):
-    """Draw circle from start to end."""
-    pass  # TODO
+
 
 
 def rectangle(start, end):
@@ -79,9 +97,14 @@ onkey(lambda: color('white'), 'W')
 onkey(lambda: color('green'), 'G')
 onkey(lambda: color('blue'), 'B')
 onkey(lambda: color('red'), 'R')
+
+# Para agregar un color nuevo solo se copió el codigo de los colores existentes y se cambió a uno standard nuevo
+onkey(lambda: color('magenta'), 'M')
+
 onkey(lambda: store('shape', line), 'l')
 onkey(lambda: store('shape', square), 's')
 onkey(lambda: store('shape', circle), 'c')
 onkey(lambda: store('shape', rectangle), 'r')
 onkey(lambda: store('shape', triangle), 't')
+
 done()
