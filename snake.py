@@ -1,11 +1,12 @@
-"""Snake, classic arcade game.
+"""
+Snake, classic arcade game.
 
-Exercises
+Ejercicios.
 
-1. How do you make the snake faster or slower?
-2. How can you make the snake go around the edges?
-3. How would you move the food?
-4. Change the snake to respond to mouse clicks.
+1. La comida podrá moverse al azar un paso a la vez y no deberá de salirse de la ventana
+
+2. Cada vez que se corra el juego, la víbora y la comida deberán tener colores diferentes entre sí, 
+pero al azar, de una serie de 5 diferentes colores, excepto el rojo.
 """
 
 from random import randrange
@@ -13,44 +14,67 @@ from turtle import *
 
 from freegames import square, vector
 
-food = vector(0, 0)
+food = vector(0,0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
 aimf= vector(0, 1)
+#############################################################
+#Parte que sirve para color random de serpiente y alimento
+azar1=randrange(5)
+azar2=randrange(5)
+if azar1==azar2:
+    azar1 =randrange(5)
+if azar1==0:
+    pintura="blue"
+if azar1==1:
+    pintura="black"
+if azar1==2:
+    pintura="green"
+if azar1==3:
+    pintura="magenta"
+if azar1==4:
+    pintura="yellow"
+if azar2==0:
+    pintura2="blue"
+if azar2==1:
+    pintura2="black"
+if azar2==2:
+    pintura2="green"
+if azar2==3:
+    pintura2="magenta"
+if azar2==4:
+    pintura2="yellow"
 
+###########################################################################
+def moveFood():
+    if randrange(50)==0:
+        y=randrange(-150,150)
+        x=randrange(-150,150)
+        food = vector(x,y)
 
 def change(x, y):
-    """CCambia la dirección de la Serpiente."""
+    """Change snake direction."""
     aim.x = x
     aim.y = y
-
 
 def changef(x1,y1):
     aimf.x=x1
     aimf.y=y1
 
 
-def moveFood():
-    """Se define el rango, y cada vez que sea 0 el número aleatorio, procederá el if el cual hará que la comida se mueva aleatoriamente"""
-    if randrange(50)==0:        
-        x=randrange(-150,150)
-        y=randrange(-150,150)
-
-        """Aparecera la comida en el puesto aleatorio que se le asigno arriba"""
-        food = vector(x,y)      
-
 
 def inside(head):
-    """Regresa True si la cabeza esta dentro de los límites"""
+    """Return True if head inside boundaries."""
     return -200 < head.x < 190 and -200 < head.y < 190
-
+######################################################################
 def inside(food):
     """Parte para revisar si la comida está dentro de la pantalla"""
     return -200 < food.x < 190 and -200 < food.y < 190
+########################################################################
 
 
 def move():
-    """Mueve la serpiente un segmento."""
+    """Move snake forward one segment."""
     head = snake[-1].copy()
     head.move(aim)
 
@@ -60,8 +84,8 @@ def move():
         return
 
     snake.append(head)
-    #############################################################################
-    #Parte para hacer que la comida se mueva paso a paso 
+#############################################################################
+#Parte para hacer que la comida se mueva paso a paso 
     if head != food:
         if randrange(20)==0:
             changef(5,0)
@@ -82,8 +106,8 @@ def move():
             if food.y>190:
                 food.y=-200
 
-############################################################################
 
+############################################################################
     if head == food:
         print('Snake:', len(snake))
         food.x = randrange(-15, 15) * 10
@@ -94,9 +118,9 @@ def move():
     clear()
 
     for body in snake:
-        square(body.x, body.y, 9, 'black')
+        square(body.x, body.y, 9, pintura)
 
-    square(food.x, food.y, 9, 'green')
+    square(food.x, food.y, 9, pintura2)
     update()
     ontimer(move, 100)
 
